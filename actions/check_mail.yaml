@@ -1,0 +1,44 @@
+name: "check mail quick"
+steps:
+  # 1️⃣ Open Thunderbird
+  - use: thunderbird.open_app
+  - use: thunderbird.dismiss_setup
+  - use: thunderbird.focus_main
+  - wait: 1-2
+
+  # 2️⃣ Open a new email compose window
+  - use: thunderbird.new_message
+  - wait: 0.6-1.0
+
+  # 3️⃣ Fill in recipient
+  - type: "test@example.com"
+  - wait: 0.2-0.5
+  - key: "esc"          # close autocomplete popup
+  - wait: 0.1-0.3
+  - key: "enter"        # commit address
+  - wait: 0.2-0.4
+
+  # 4️⃣ Fill in Subject — RANDOMIZED
+  - key: "tab"          # move from 'To' to 'Subject'
+  - wait: 0.2-0.4
+  - type_oneof:
+      - "Quick check-in"
+      - "Status update {ts}"
+      - "FYI ({rand})"
+
+  # 5️⃣ Fill in Body — RANDOMIZED
+  - key: "tab"          # move from Subject to Body
+  - wait: 0.2-0.4
+  - type_oneof:
+      - "Automated test draft from simulator."
+      - "This is a non-delivery test message ({rand})."
+      - "Draft created at {ts}."
+  - wait: 0.8-1.5
+
+  # 6️⃣ Discard draft
+  - use: thunderbird.discard_compose
+  - wait: 0.6-1.0
+
+  #close Thunderbird 
+  - use: thunderbird.close_app
+

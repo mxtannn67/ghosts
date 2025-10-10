@@ -1,0 +1,23 @@
+open_app:
+  steps:
+    - exec: "bash -lc 'pgrep -f onlyoffice-desktopeditors >/dev/null || (nohup /snap/bin/onlyoffice-desktopeditors >/dev/null 2>&1 & disown)'"
+    - wait: 7-9
+    - focus_window_class: "onlyoffice"  # we verified this class token exists via xdotool
+
+open_blank_doc:
+  steps:
+    # create/open a temp doc path; launching with a file often steals focus
+    - exec: "bash -lc 'mkdir -p /tmp/user-sim && touch /tmp/user-sim/notes_demo.docx && nohup /snap/bin/onlyoffice-desktopeditors /tmp/user-sim/notes_demo.docx >/dev/null 2>&1 & disown'"
+    - wait: 3-5
+    - focus_window_class: "onlyoffice"
+
+# modules/onlyoffice
+save_and_close:
+  steps:
+    - keycombo: ["ctrl", "s"]
+    - wait: 0.8-1.2
+    - type: "notes_{ts}_{rand}.docx"   
+    - key: "enter"
+    - wait: 1-2
+    - keycombo: ["alt", "f4"]
+    - wait: 0.5-1.0

@@ -1,0 +1,28 @@
+name: "write notes (onlyoffice)"
+steps:
+  - use: onlyoffice.open_app
+  - focus_window_class: "ONLYOFFICE"
+  - use: onlyoffice.open_blank_doc
+  - focus_window_class: "ONLYOFFICE"
+  - wait: 0.5-1
+
+  - type_oneof:
+      - "Automated note generated at {ts} (id {rand})."
+      - "Believe me im a real human, really. really.... ({ts}-{rand})."
+      - "Simulator run {rand} created this file on {ts}."
+      - "This document was produced automatically ({ts}-{rand})."
+      - "HEHEHEHHEHE HAHAHAHAHAH HOHOOHOHOHOHOOH GIGIGIGIIGIGI({ts}-{rand})."
+  - key: "enter"
+
+  - type_oneof:
+      - "Typing delays are randomized to feel human."
+      - "mx is a kind person."
+      - "mx is a sweet person."
+      - "mx is a lovely person."
+      - "mx is a leng zai."
+      - "This line is chosen randomly from a small pool."
+      - "Each run writes slightly different content."
+
+  - wait: 0.6-1.2
+  - use: onlyoffice.save_and_close
+

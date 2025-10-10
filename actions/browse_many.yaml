@@ -1,0 +1,92 @@
+name: "browse many sites (humanized)"
+steps:
+  # Open & focus
+  - use: firefox.open
+  - use: firefox.focus
+  - wait: 0.8-1.4
+
+  # Go to address bar and type ONE random destination, then Enter
+  - keycombo: ["ctrl", "l"]
+  - wait: 0.2-0.4
+  - type_oneof:
+      # Search queries
+      - "https://www.google.com/search?q=latest+tech+news"
+      - "https://www.google.com/search?q=best+office+chair+2025"
+      - "https://www.bing.com/search?q=how+to+configure+backups+ubuntu"
+      # News
+      - "https://www.bbc.com"
+      - "https://www.nytimes.com"
+      - "https://www.cnn.com"
+      # Gallery
+      - "https://unsplash.com/s/photos/office"
+      - "https://www.flickr.com/explore"
+      # Sample download indexes (safe test pages)
+      - "https://download.nus.edu.sg/mirror/ubuntu-releases/20.04/ubuntu-20.04.6-live-server-amd64.list"
+      - "https://download.nus.edu.sg/mirror/ubuntu-releases/20.04/SHA256SUMS.gpg"
+  - wait: 0.2-0.4
+  - key: "enter"
+  - wait: 5-8
+
+  # Human pauses & scrolls
+  - scroll: -400
+  - wait: 0.5-1.0
+  - scroll: 300
+  - wait: 0.8-1.6
+  - wiggle: "10,5,0.2"
+
+  # Occasionally open an extra tab and visit a second site
+  - type_oneof: ["", "open_extra"]
+  - wait: 0.3-0.7
+  - keycombo: ["ctrl", "t"]
+  - wait: 0.5-1.0
+  - keycombo: ["ctrl", "l"]
+  - type_oneof:
+      - "https://news.google.com"
+      - "https://reddit.com/r/technology"
+      - "https://medium.com"
+  - key: "enter"
+  - wait: 5-8
+
+  # Occasionally save the page (Ctrl+S), unique filename
+  - type_oneof: ["", "save_page"]
+  - keycombo: ["ctrl", "s"]
+  - wait: 0.6-1.0
+  - type: "page_{ts}_{rand}"
+  - key: "enter"
+  - wait: 1.0-2.0
+
+  # Occasionally open a bookmark from the sidebar
+  - type_oneof: ["", "open_bookmark"]
+  - wait: 0.3-0.7
+  - keycombo: ["ctrl", "b"]         # open bookmarks sidebar
+  - wait: 0.8-1.4
+  # randomly press Down a few times ("" means skip)
+  - key_oneof: ["", "down"]
+  - key_oneof: ["", "down"]
+  - key_oneof: ["", "down"]
+  - key_oneof: ["", "down"]
+  - wait: 0.2-0.4
+  - key: "enter"                    # open selected bookmark
+  - wait: 4-6
+  - keycombo: ["ctrl", "b"]         # close sidebar
+  - wait: 0.4-0.8
+
+  - type_oneof: ["", "add_bookmark"]
+  - keycombo: ["ctrl", "d"]   # bookmark this page
+  - wait: 0.3-0.6
+  - key: "enter"              # confirm
+  - wait: 0.3-0.6
+  
+  # Final quick search in the search box (Ctrl+K)
+  - keycombo: ["ctrl", "k"]
+  - wait: 0.2-0.4
+  - type_oneof:
+      - "project status updates"
+      - "how to configure backups ubuntu"
+      - "best office chair 2025"
+  - key: "enter"
+  - wait: 3-6
+
+  # Close Firefox
+  - use: firefox.close
+

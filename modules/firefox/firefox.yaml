@@ -1,0 +1,20 @@
+open:
+  steps:
+    # launch firefox if not running (portable)
+    - exec: "bash -lc 'pgrep -x firefox >/dev/null || (nohup firefox >/dev/null 2>&1 & disown)'"
+    - wait: 4-7
+    # give it a moment to create a window and set focus
+    - focus_window_class: "firefox"
+
+focus:
+  steps:
+    - focus_window_class: "firefox"
+    - wait: 0.4-0.9
+
+close:
+  steps:
+    # use alt+f4 to close window; fallback: 'pkill -f firefox' if needed
+    - keycombo: ["alt", "f4"]
+    - wait: 0.6-1.2
+    - exec: "bash -lc 'sleep 0.6; pgrep -x firefox >/dev/null || true'"
+

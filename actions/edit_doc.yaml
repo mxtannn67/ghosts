@@ -1,0 +1,63 @@
+name: "edit existing document (single open + Save As)"
+steps:
+  # Launch ONLYOFFICE and open exactly ONE random existing docx from ~/Documents
+  - exec: >
+      bash -lc '
+        f=$(ls -1 ~/Documents/*.docx 2>/dev/null | shuf -n1);
+        if [ -n "$f" ]; then
+          nohup /snap/bin/onlyoffice-desktopeditors "$f" >/dev/null 2>&1 & disown;
+        else
+          nohup /snap/bin/onlyoffice-desktopeditors >/dev/null 2>&1 & disown;
+        fi
+      '
+  - wait: 3-6
+
+  # 2) Focus the OnlyOffice window
+  - focus_window_class: "DesktopEditors"
+  - wait: 1-2
+
+  # 3) Move caret to bottom and start typing
+  - keycombo: ["ctrl", "end"]
+  - wait: 0.3-0.6
+  - key: "enter"
+  - wait: 0.2-0.4
+
+  # 4) Write realistic short content
+  - type_oneof:
+      - "Status update: all automated tests completed successfully."
+      - "Added a summary of configuration changes for this cycle."
+      - "Draft: checklist updates pending review by QA."
+  - wait: 0.8-1.5
+  - key: "enter"
+  - type_oneof:
+      - "This note was modified automatically at {ts}."
+      - "Automated note revision {rand} created at {ts}."
+      - "File updated for tracking purposes."
+  - wait: 0.8-1.5
+  - key: "enter"
+  - type_oneof:
+      - "Thanks,"
+      - "Best regards,"
+      - "Cheers,"
+  - wait: 0.5-1.0
+  - key: "enter"
+  - type_oneof:
+      - "Alex"
+      - "Jamie"
+      - "Taylor"
+
+  # 5) Always Save As to a NEW file (works for read-only & editable)
+  - wait: 0.8-1.4
+  - keycombo: ["ctrl", "shift", "s"]   # Save As
+  - wait: 1.0-1.8
+  - type: "notes_{ts}_{rand}.docx"
+  - wait: 0.3-0.7
+  - key: "enter"
+  - wait: 1.5-2.5
+
+  # 6) Small human-like pause, then close
+  - wiggle: "8,6,0.3"
+  - wait: 0.8-1.2
+  - keycombo: ["alt", "f4"]
+  - wait: 0.8-1.4
+

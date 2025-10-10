@@ -1,0 +1,22 @@
+active_hours:
+  start: "00:00"
+  end: "23:59"
+
+cycle:
+  min_idle_sec: 15
+  max_idle_sec: 45
+
+randomize_actions: true
+
+log_path: "~/.local/share/user-sim/activity.log"
+
+screen:
+  confidence: 0.86
+  search_timeout_sec: 10
+  move_jitter_px: 5
+
+human_delay:
+  key_min_ms: 40
+  key_max_ms: 160
+  click_ms: 140
+

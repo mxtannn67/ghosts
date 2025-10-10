@@ -1,0 +1,43 @@
+open_app:
+  steps:
+    - exec: "bash -lc 'pgrep -x thunderbird >/dev/null || (nohup thunderbird >/dev/null 2>&1 & disown)'"
+    - wait: 5-8
+    - focus_window_class: "thunderbird"
+
+dismiss_setup:
+  steps:
+    - focus_window_class: "thunderbird"
+    - wait: 0.6-1.0
+    - keycombo: ["ctrl", "w"]  # close Account Setup tab/dialog if present
+    - wait: 0.4-0.8
+    - key: "esc"               # safe fallback if nothing to close
+    - wait: 0.3-0.6
+    - focus_window_class: "thunderbird"
+    - wait: 0.6-1.2
+
+focus_main:
+  steps:
+    - focus_window_class: "thunderbird"
+    - wait: 0.5-1.0
+
+new_message:
+  steps:
+    - keycombo: ["ctrl", "n"]
+    - wait: 1.0-2.0
+
+discard_compose:
+  steps:
+    - keycombo: ["ctrl", "w"]
+    - wait: 0.5-1.0
+    - key: "tab"
+    - wait: 0.2-0.5
+    - key: "tab"
+    - wait: 0.2-0.5
+    - key: "enter"
+    - wait: 0.5-1.0
+
+close_app:
+  steps:
+    - keycombo: ["alt", "f4"]
+    - wait: 0.5-1.0
+
