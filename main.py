@@ -397,8 +397,10 @@ def main():
     allowed_actions = [
         os.path.join(base, "actions", "browse_many.yaml"),
         os.path.join(base, "actions", "write_notes.yaml"),
-        #os.path.join(base, "actions", "check_mail.yaml"),
+        os.path.join(base, "actions", "click_link_email.yaml"),
+        os.path.join(base, "actions", "open_attachment_email.yaml"),
         os.path.join(base, "actions", "edit_doc.yaml"),
+        os.path.join(base, "actions", "draft_email.yaml."),
     ]
 
     logf.write(f"{now_str()} START_LOOP (infinite random actions)\n")

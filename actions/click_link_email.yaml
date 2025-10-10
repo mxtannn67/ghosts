@@ -1,0 +1,55 @@
+name: "check email visually (click newest and open link)"
+steps:
+  # 1️⃣ Launch Thunderbird if not open
+  - exec: >
+      bash -lc '
+        pgrep -x thunderbird >/dev/null 2>&1 ||
+        (nohup thunderbird >/dev/null 2>&1 & disown)
+      '
+  - wait: 4-6
+
+  # 2️⃣ Focus Thunderbird
+  - focus_window_class: "Thunderbird"
+  - wait: 1.0-2.0
+
+  # 3️⃣ Click on the Inbox (left sidebar)
+  # Adjust click_image target later if you capture inbox_icon.png
+  - click_image: "inbox_icon.png"
+  - wait: 2-3
+
+  # 4️⃣ Scroll to the bottom (newest email)
+  - exec: >
+      bash -lc '
+        xdotool mousemove 671 221
+      '
+  - scroll: -800
+  - wait: 0.6-1.0
+  - scroll: -800
+  - wait: 0.6-1.0
+  - scroll: -800
+  - wait: 0.6-1.0
+
+  # 5️⃣ Move mouse to bottom (newest email) and click
+  # Approximate coordinates – adjust after a test run
+  - exec: >
+      bash -lc '
+        xdotool mousemove 557 874 click 1
+      '
+  - wait: 2-3
+
+  # 6️⃣ Focus the message preview pane (so hyperlink becomes active)
+  - keycombo: ["tab"]
+  - wait: 0.4-0.7
+  - keycombo: ["tab"]
+  - wait: 0.4-0.7
+
+  # 7️⃣ Click the hyperlink inside the email body
+  # Option A: If you capture hyperlink_screenshot.png
+  - click_image: "hyperlink_screenshot.png"
+  - wait: 4-7
+  - use: thunderbird.close_app
+  - wait: 1-2 
+  
+
+
+

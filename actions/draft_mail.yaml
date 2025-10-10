@@ -1,4 +1,4 @@
-name: "check mail quick"
+name: "draft mail quick"
 steps:
   # 1️⃣ Open Thunderbird
   - use: thunderbird.open_app
