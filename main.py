@@ -385,7 +385,17 @@ def run_action(action_path, cfg, logf, modules_root):
 
     logf.write(f"{now_str()} END_ACTION\n")
     
-    
+
+def run_seed_notes(base, cfg, logf, modules_root):
+    """Run write_notes.yaml once at startup so there is always at least one doc to edit."""
+    seed_path = os.path.join(base, "actions", "write_notes.yaml")
+    try:
+        logf.write(f"{now_str()} SEED start (write_notes.yaml)\n")
+        run_action(seed_path, cfg, logf, modules_root)
+        logf.write(f"{now_str()} SEED done\n")
+    except Exception as e:
+        logf.write(f"{now_str()} SEED ERROR {e}\n")
+
 #------------------------- Main Loop ----------------------------------------
 
 def main():
@@ -393,6 +403,9 @@ def main():
     cfg = load_yaml(os.path.join(base, "settings.yaml"))
     logf = log_setup(cfg["log_path"])
     modules_root = os.path.join(base, "modules")
+    
+    # Run write_notes once BEFORE any other actions
+    run_seed_notes(base, cfg, logf, modules_root)
 
     allowed_actions = [
         os.path.join(base, "actions", "browse_many.yaml"),
@@ -400,7 +413,7 @@ def main():
         os.path.join(base, "actions", "click_link_email.yaml"),
         os.path.join(base, "actions", "open_attachment_email.yaml"),
         os.path.join(base, "actions", "edit_doc.yaml"),
-        os.path.join(base, "actions", "draft_email.yaml."),
+        os.path.join(base, "actions", "draft_mail.yaml."),
     ]
 
     logf.write(f"{now_str()} START_LOOP (infinite random actions)\n")
