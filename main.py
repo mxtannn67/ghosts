@@ -413,7 +413,7 @@ def main():
         os.path.join(base, "actions", "click_link_email.yaml"),
         os.path.join(base, "actions", "open_attachment_email.yaml"),
         os.path.join(base, "actions", "edit_doc.yaml"),
-        os.path.join(base, "actions", "draft_mail.yaml."),
+        os.path.join(base, "actions", "draft_mail.yaml"),
     ]
 
     logf.write(f"{now_str()} START_LOOP (infinite random actions)\n")
