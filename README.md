@@ -28,35 +28,6 @@ The controller (`main.py`) handles:
 
 ---
 
-## 📂 Project Structure
-
-ghosts/
-├── actions/
-│   ├── browse_many.yaml            # Browses multiple websites in Firefox
-│   ├── click_link_email.yaml       # Opens Thunderbird → clicks hyperlink in latest email
-│   ├── draft_mail.yaml             # Drafts a new email with random content
-│   ├── edit_doc.yaml               # Opens & edits random OnlyOffice document
-│   ├── open_attachment_email.yaml  # Opens latest email and downloads attachment
-│   └── write_notes.yaml            # Creates a new notes document
-│
-├── modules/
-│   ├── firefox/
-│   │   ├── firefox.yaml
-│   │   └── images/                 # Icon templates for automation
-│   ├── onlyoffice/
-│   │   ├── onlyoffice.yaml
-│   │   └── images/
-│   └── thunderbird/
-│       ├── thunderbird.yaml
-│       └── images/                 # Contains 'hyperlink' & 'attachment' screenshots
-│
-├── main.py                         # Main controller that executes YAML actions
-├── settings.yaml                   # Global config (log paths, timing, random delays)
-└── .gitignore
-
-
----
-
 ## 🧩 Features
 
 - 🧍 **Humanized Behavior Simulation** – Mimics keystrokes, random delays, and window focus  
